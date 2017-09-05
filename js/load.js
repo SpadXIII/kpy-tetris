@@ -5,6 +5,10 @@ var Images = new (function() {
 
   this.initialize = function(callback) {
     var numToLoad = Object.keys(images).length;
+    if (numToLoad === 0 && callback) {
+      callback();
+      return;
+    }
 
     for (var key in images) {
       if (images.hasOwnProperty(key)) {
