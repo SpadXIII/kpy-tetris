@@ -4,27 +4,11 @@ var gameCanvas, gameContext;
 var screenShakeAmount = 0;
 var screenShakeAmountHalf = 0;
 
-// Make sure redrawCanvas is called each draw-cycle by default.
-var MainLoop_setDraw = MainLoop.setDraw;
-MainLoop.setDraw = function(fun) {
-  fun = fun || function() {};
-  return MainLoop_setDraw.call(this, function(interpolationPercentage) {
-    gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+var isPlaying = false;
 
-    fun(interpolationPercentage);
-
-    redrawCanvas();
-  });
-};
-
-// Make sure TWEEN.update is called each update-cycle by default.
-var MainLoop_setUpdate = MainLoop.setUpdate;
-MainLoop.setUpdate = function(fun) {
-  fun = fun || function() {};
-  return MainLoop_setUpdate.call(this, function(delta) {
-    fun(delta);
-    TWEEN.update(delta);
-  });
+var settings = {
+  controlSchemePlayer1: 0,
+  controlSchemePlayer2: 3
 };
 
 window.onload = function() {
@@ -33,32 +17,37 @@ window.onload = function() {
 
   initDrawingCanvas();
 
+  var _settings = JSON.parse(localStorage.getItem('settings'));
+  if (_settings) {
+    settings = _settings;
+  }
+
   Sounds.initialize(function() {
     Music.initialize(function() {
       Images.initialize(menuInitialize);
     })
   });
 
-  var _settings = JSON.parse(localStorage.getItem('settings'));
-  if (_settings) {
-    settings = _settings;
-  }
-};
-
-function menuInitialize() {
-  var loading = document.getElementById('loading');
-  loading.parentNode.removeChild(loading);
-
-  // debug
-  gameInitialize();
-}
-
-function gameInitialize(gameMode) {
   MainLoop
     .stop()
     .setUpdate(gameUpdate)
-    .setDraw(gameDraw)
-    .start();
+    .setDraw(gameDraw);
+};
+
+function gameInitialize(gameMode) {
+  isPlaying = true;
+
+  MainLoop.start();
+}
+
+function setSetting(setting, value) {
+  settings[setting] = value;
+
+  if (localStorage && localStorage.setItem) {
+    localStorage.setItem('settings', JSON.stringify(settings));
+  }
+
+  return settings[setting];
 }
 
 function shakeScreen(amount) {
@@ -92,6 +81,29 @@ function gameDraw(interpolationPercentage) {
 
   gameContext.restore();
 }
+
+// Make sure redrawCanvas is called each draw-cycle by default.
+var MainLoop_setDraw = MainLoop.setDraw;
+MainLoop.setDraw = function(fun) {
+  fun = fun || function() {};
+  return MainLoop_setDraw.call(this, function(interpolationPercentage) {
+    gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+    fun(interpolationPercentage);
+
+    redrawCanvas();
+  });
+};
+
+// Make sure TWEEN.update is called each update-cycle by default.
+var MainLoop_setUpdate = MainLoop.setUpdate;
+MainLoop.setUpdate = function(fun) {
+  fun = fun || function() {};
+  return MainLoop_setUpdate.call(this, function(delta) {
+    fun(delta);
+    TWEEN.update(delta);
+  });
+};
 
 // Make sure we can handle the game when it has fallen too far behind real time.
 // For example when the browser window is hidden or moved to the background.

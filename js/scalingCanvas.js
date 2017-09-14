@@ -4,7 +4,7 @@ function initDrawingCanvas() {
   drawCanvas = document.getElementById('drawCanvas');
   drawContext = drawCanvas.getContext('2d');
 
-  window.addEventListener('resize', resizeWindow);
+  $(window).on('resize', resizeWindow);
 
   aspectRatio = gameCanvas.width / gameCanvas.height;
 

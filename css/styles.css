@@ -7,11 +7,20 @@ html, body {
 
 body {
     background: #000;
+    color: #fff;
     font-family: Verdana, sans-serif;
     overflow: hidden;
 }
 
-#loading,
+a {
+    color: #fff;
+}
+
+h1, h2, h3 {
+    margin: 0 0 1em 0;
+}
+
+#wrapper,
 #drawCanvas {
     position: absolute;
     top: 50%;
@@ -31,7 +40,41 @@ body {
     top: 25%;
 }
 
-#loading h2 {
-    color: #fff;
-    font-family: Verdana, sans-serif;
+#wrapper {
+    width: 100%;
+}
+
+#wrapper .back {
+    display: inline-block;
+    padding-top: 1em;
+}
+
+.menu {
+    display: none;
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 2em;
+    border: solid 1px white;
+}
+
+#settings > div > div {
+    float: left;
+    width: 45%;
+}
+
+#settings > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
 }
