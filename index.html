@@ -1,68 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>KPY-tetris - a split screen tetris game</title>
-  <link rel="stylesheet" href="css/styles.css" />
+    <meta charset="utf-8">
+    <title>KPY-tetris - a split screen tetris game</title>
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 <div id="gameDiv">
-  <canvas id="drawCanvas">
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
-  </canvas>
+    <canvas id="drawCanvas">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+    </canvas>
 </div>
 
 <div id="wrapper">
-  <div id="loading">
-    <h2>Loading KPY-tetris</h2>
-    <img src="img/loader.gif" alt="Loading KPY-tetris">
-  </div>
-
-  <div class="menu" id="menu">
-    <h2>Menu</h2>
-    <ul>
-      <li><a href="#play">Play</a></li>
-      <li><a href="#settings">Settings</a></li>
-      <li><a href="#credits">Credits</a></li>
-      <li><a href="#howToPlay">How to play</a></li>
-    </ul>
-  </div>
-
-  <div class="menu" id="credits">
-    <h2>Credits</h2>
-    <ul>
-      <li>Caspar</li>
-      <li>Danny</li>
-      <li>Maarten</li>
-    </ul>
-    <a href="#menu" class="back">back</a>
-  </div>
-
-  <div class="menu" id="settings">
-    <h2>Settings</h2>
-
-    <div>
-      <div id="settingsPlayer1">
-        <h3>Player 1</h3>
-      </div>
-      <div id="settingsPlayer2">
-        <h3>Player 2</h3>
-      </div>
+    <div id="loading">
+        <h2>Loading KPY-tetris</h2>
+        <img src="img/loader.gif" alt="Loading KPY-tetris">
     </div>
 
-    <a href="#menu" class="back">back</a>
-  </div>
+    <div class="menu" id="menu">
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="#play">Play</a></li>
+            <li><a href="#settings">Settings</a></li>
+            <li><a href="#credits">Credits</a></li>
+            <li><a href="#howToPlay">How to play</a></li>
+        </ul>
+    </div>
 
-  <div class="menu" id="howToPlay">
-    <h2>How to play</h2>
-    <ul>
-      <li>Use keys to move and rotate the blocks</li>
-      <li>Survive longer than your opponent!</li>
-    </ul>
-    <a href="#menu" class="back">back</a>
-  </div>
+    <div class="menu" id="credits">
+        <h2>Credits</h2>
+        <ul>
+            <li>Caspar</li>
+            <li>Danny</li>
+            <li>Maarten</li>
+        </ul>
+        <a href="#menu" class="back">back</a>
+    </div>
+
+    <div class="menu" id="settings">
+        <h2>Settings</h2>
+
+        <div>
+            <div id="settingsPlayer1">
+                <h3>Player 1</h3>
+            </div>
+            <div id="settingsPlayer2">
+                <h3>Player 2</h3>
+            </div>
+        </div>
+
+        <a href="#menu" class="back">back</a>
+    </div>
+
+    <div class="menu" id="howToPlay">
+        <h2>How to play</h2>
+        <ul>
+            <li>Use keys to move and rotate the blocks</li>
+            <li>Survive longer than your opponent!</li>
+        </ul>
+        <a href="#menu" class="back">back</a>
+    </div>
 </div>
-
 
 <script src="js/lib/jquery-3.2.1.slim.min.js"></script>
 <script src="js/lib/mainloop.js"></script>
