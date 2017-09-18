@@ -20,7 +20,8 @@ function keyDown(event) {
   }
 
   // Call each play field and let them handle the key press.
-  //playField.keyDown(event);
+  player1.keyDown(event);
+  player2.keyDown(event);
 
   if (event.keyCode === KEY_SPACE) {
     event.preventDefault();
@@ -29,5 +30,6 @@ function keyDown(event) {
 
 function keyUp(event) {
   // Call each play field and let them handle the key release.
-  //playField.keyUp(event);
+  player1.keyUp(event);
+  player2.keyUp(event);
 }

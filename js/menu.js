@@ -26,6 +26,7 @@ function showMenu() {
   if (isPlaying) {
     isPlaying = false;
     MainLoop.stop();
+    clearCanvas();
   }
 
   if ($activeWrapperScreen) {

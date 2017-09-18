@@ -1,5 +1,5 @@
 // Debug
-const DEBUG = false;
+const DEBUG = true;
 
 const KEY_ESC = 27;
 const KEY_SPACE = 32;

@@ -6,6 +6,8 @@ var screenShakeAmountHalf = 0;
 
 var isPlaying = false;
 
+var player1, player2;
+
 var settings = {
   controlSchemePlayer1: 0,
   controlSchemePlayer2: 3
@@ -22,20 +24,28 @@ window.onload = function() {
     settings = _settings;
   }
 
+  MainLoop
+    .stop()
+    .setUpdate(gameUpdate)
+    .setDraw(gameDraw);
+
   Sounds.initialize(function() {
     Music.initialize(function() {
       Images.initialize(menuInitialize);
     })
   });
 
-  MainLoop
-    .stop()
-    .setUpdate(gameUpdate)
-    .setDraw(gameDraw);
+  if (DEBUG) {
+    // start play now!
+    $('a.play').trigger('click');
+  }
 };
 
 function gameInitialize(gameMode) {
   isPlaying = true;
+
+  player1 = new Playfield(settings['controlSchemePlayer1'], 130);
+  player2 = new Playfield(settings['controlSchemePlayer2'], 820);
 
   MainLoop.start();
 }
@@ -57,9 +67,14 @@ function shakeScreen(amount) {
 
 function gameUpdate(delta) {
   // Call the update methods of all objects.
+  player1.update(delta);
+  player2.update(delta);
+
+  TWEEN.update(delta);
 }
 
 function gameDraw(interpolationPercentage) {
+  clearCanvas();
   gameContext.save();
 
   if (screenShakeAmount) {
@@ -78,32 +93,17 @@ function gameDraw(interpolationPercentage) {
   }
 
   // Call the draw methods of all objects.
+  player1.draw(interpolationPercentage);
+  player2.draw(interpolationPercentage);
 
   gameContext.restore();
+  redrawCanvas();
 }
 
-// Make sure redrawCanvas is called each draw-cycle by default.
-var MainLoop_setDraw = MainLoop.setDraw;
-MainLoop.setDraw = function(fun) {
-  fun = fun || function() {};
-  return MainLoop_setDraw.call(this, function(interpolationPercentage) {
-    gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-
-    fun(interpolationPercentage);
-
-    redrawCanvas();
-  });
-};
-
-// Make sure TWEEN.update is called each update-cycle by default.
-var MainLoop_setUpdate = MainLoop.setUpdate;
-MainLoop.setUpdate = function(fun) {
-  fun = fun || function() {};
-  return MainLoop_setUpdate.call(this, function(delta) {
-    fun(delta);
-    TWEEN.update(delta);
-  });
-};
+function clearCanvas() {
+  gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+  redrawCanvas();
+}
 
 // Make sure we can handle the game when it has fallen too far behind real time.
 // For example when the browser window is hidden or moved to the background.
