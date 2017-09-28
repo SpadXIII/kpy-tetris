@@ -1,20 +1,15 @@
 var Playfield = function(controlSchemeId, x) {
 
   var y = 100;
-  var width = 330;
+  var width = 400;
   var height = 600;
 
   var blocks = [];
+  var grid = [];
 
   var dropSpeed = 0.08;
 
-  var keys = {
-    left: controlSchemes[controlSchemeId]['keys'][0],
-    right: controlSchemes[controlSchemeId]['keys'][1],
-    rotate: controlSchemes[controlSchemeId]['keys'][2],
-    drop: controlSchemes[controlSchemeId]['keys'][3],
-    stash: controlSchemes[controlSchemeId]['keys'][4]
-  };
+  var keys = controlSchemes[controlSchemeId]['keys'];
 
   var key_held = {
     left: false,
@@ -24,13 +19,25 @@ var Playfield = function(controlSchemeId, x) {
     stash: false
   };
 
-  var b = new Block('test', '#f00');
-  b.place(x + 30, y + 30);
+  var b = new Block(BLOCK_TYPE_I);
+  b.place(5, 0);
+  blocks.push(b);
+
+  b = new Block(BLOCK_TYPE_S);
+  b.place(5, 3);
+  blocks.push(b);
+
+  b = new Block(BLOCK_TYPE_T);
+  b.place(5, 6);
+  blocks.push(b);
+
+  b = new Block(BLOCK_TYPE_O);
+  b.place(1, 2);
   blocks.push(b);
 
   this.draw = function() {
     for (var i = 0; i < blocks.length; i++) {
-      blocks[i].draw();
+      blocks[i].draw(x, y);
     }
 
     // Debug
@@ -49,39 +56,38 @@ var Playfield = function(controlSchemeId, x) {
     }
 
     if (key_held['drop']) {
-      b.drop();
+      b.drop(grid);
       key_held['drop'] = false;
     }
     if (key_held['rotate']) {
-      b.rotate();
+      b.rotate(grid);
       key_held['rotate'] = false;
     }
     if (key_held['left']) {
-      b.moveLeft();
+      b.moveLeft(grid);
       key_held['left'] = false;
     }
     if (key_held['right']) {
-      b.moveRight();
+      b.moveRight(grid);
       key_held['right'] = false;
     }
   };
 
   this.keyDown = function(event) {
-    for (var k in key_held) {
-      if (keys.hasOwnProperty(k) && event.keyCode === keys[k]) {
-        key_held[k] = true;
-        event.preventDefault();
-      }
-    }
+    setKey(event, true);
   };
 
   this.keyUp = function(event) {
+    setKey(event, false);
+  };
+
+  function setKey(event, set) {
     for (var k in key_held) {
       if (keys.hasOwnProperty(k) && event.keyCode === keys[k]) {
-        key_held[k] = false;
+        key_held[k] = set;
         event.preventDefault();
       }
     }
-  };
+  }
 
 };

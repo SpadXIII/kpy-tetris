@@ -34,11 +34,6 @@ window.onload = function() {
       Images.initialize(menuInitialize);
     })
   });
-
-  if (DEBUG) {
-    // start play now!
-    $('a.play').trigger('click');
-  }
 };
 
 function gameInitialize(gameMode) {

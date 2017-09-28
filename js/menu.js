@@ -20,6 +20,11 @@ function menuInitialize() {
 
   settingsInitialize(1);
   settingsInitialize(2);
+
+  if (DEBUG) {
+    // start play now!
+    $('a.play').trigger('click');
+  }
 }
 
 function showMenu() {

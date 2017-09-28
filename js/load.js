@@ -1,6 +1,7 @@
 var Images = new (function() {
   var images = {
     // key: 'img/image_name.png'
+    block: 'img/block.png'
   };
 
   this.initialize = function(callback) {
