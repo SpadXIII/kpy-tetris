@@ -7,7 +7,7 @@ var Playfield = function(controlSchemeId, x) {
   var blocks = [];
   var grid = [];
 
-  var dropSpeed = 0.008;
+  var intervalRemaining = TICK_INTERVAL;
 
   var keys = controlSchemes[controlSchemeId]['keys'];
 
@@ -19,26 +19,16 @@ var Playfield = function(controlSchemeId, x) {
     stash: false
   };
 
-  var b = new Block(BLOCK_TYPE_I);
-  b.place(5, 0);
-  blocks.push(b);
+  var currentBlock = randomBlock();
 
-  b = new Block(BLOCK_TYPE_S);
-  b.place(5, 3);
-  blocks.push(b);
+  function randomBlock() {
+    var i = random(0, BLOCK_TYPES.length);
 
-  b = new Block(BLOCK_TYPE_O);
-  b.place(1, 2);
-  blocks.push(b);
-
-  b = new Block(BLOCK_TYPE_L);
-  b.place(5, 6);
-  blocks.push(b);
+    return new Block(BLOCK_TYPES[i]);
+  }
 
   this.draw = function() {
-    for (var i = 0; i < blocks.length; i++) {
-      blocks[i].draw(x, y);
-    }
+    currentBlock.draw(x, y);
 
     // Debug
     drawStrokeRect(gameContext, x, y, width, height, '#fff', 2);
@@ -51,24 +41,32 @@ var Playfield = function(controlSchemeId, x) {
   };
 
   this.update = function(delta) {
-    for (var i = blocks.length - 1; 0 <= i; i--) {
-      blocks[i].update(delta, dropSpeed);
+    intervalRemaining -= delta;
+    if (intervalRemaining < 0) {
+      intervalRemaining = TICK_INTERVAL;
+      currentBlock.moveDown(grid);
+
+      // debug
+      var pos = currentBlock.getPosition();
+      if (FIELD_ROWS < pos.y) {
+        currentBlock = randomBlock();
+      }
     }
 
     if (key_held['drop']) {
-      b.drop(grid);
+      currentBlock.drop(grid);
       key_held['drop'] = false;
     }
     if (key_held['rotate']) {
-      b.rotate(grid);
+      currentBlock.rotate(grid);
       key_held['rotate'] = false;
     }
     if (key_held['left']) {
-      b.moveLeft(grid);
+      currentBlock.moveLeft(grid);
       key_held['left'] = false;
     }
     if (key_held['right']) {
-      b.moveRight(grid);
+      currentBlock.moveRight(grid);
       key_held['right'] = false;
     }
   };

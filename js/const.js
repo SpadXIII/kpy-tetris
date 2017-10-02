@@ -3,6 +3,7 @@ const DEBUG = true;
 
 const FIELD_COLS = 10;
 const FIELD_ROWS = 15;
+const TICK_INTERVAL = 600;
 
 const KEY_ESC = 27;
 const KEY_SPACE = 32;
@@ -39,6 +40,15 @@ const BLOCK_TYPE_O = 3;
 const BLOCK_TYPE_S = 4;
 const BLOCK_TYPE_T = 5;
 const BLOCK_TYPE_Z = 6;
+const BLOCK_TYPES = [
+  BLOCK_TYPE_I,
+  BLOCK_TYPE_J,
+  BLOCK_TYPE_L,
+  BLOCK_TYPE_O,
+  BLOCK_TYPE_S,
+  BLOCK_TYPE_T,
+  BLOCK_TYPE_Z
+];
 const BLOCK_COLORS = [
   '#f00', // I
   '#0f0', // J

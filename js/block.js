@@ -2,11 +2,6 @@ var Block = function(type) {
 
   var x = 5;
   var y = 0;
-  var width = 30;
-  var height = 60;
-  var angle = 0;
-
-  var isDropping = false;
 
   var shapes = BLOCK_SHAPES[type];
   var state = 0;
@@ -22,7 +17,12 @@ var Block = function(type) {
   context.globalCompositeOperation = "destination-atop";
   context.drawImage(Images.block, 0, 0);
 
-  console.log(shape);
+  this.getPosition = function() {
+    return {
+      x: x,
+      y: y
+    }
+  };
 
   this.place = function(newX, newY) {
     x = newX;
@@ -37,14 +37,18 @@ var Block = function(type) {
     x += 1;
   };
 
+  this.moveDown = function(grid) {
+    y += 1;
+  };
+
   this.rotate = function(grid) {
     state = (state + 1) % shapes.length;
     shape = shapes[state];
   };
 
   this.drop = function(grid) {
+    // @todo drop down completely
     y += 1;
-    isDropping = true;
   };
 
   this.draw = function(playfieldX, playfieldY) {
@@ -56,16 +60,6 @@ var Block = function(type) {
           gameContext.drawImage(canvas, bx + playfieldX, by + playfieldY);
         }
       }
-    }
-  };
-
-  this.update = function(delta, dropSpeed) {
-    if (isDropping) {
-      y += dropSpeed * delta;
-    }
-
-    if (FIELD_ROWS < y) {
-      y = 0;
     }
   };
 
