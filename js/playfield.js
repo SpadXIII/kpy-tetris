@@ -4,7 +4,6 @@ var Playfield = function(controlSchemeId, x) {
   var width = 400;
   var height = 600;
 
-  var blocks = [];
   var grid = [];
 
   var intervalRemaining = TICK_INTERVAL;
@@ -19,23 +18,40 @@ var Playfield = function(controlSchemeId, x) {
     stash: false
   };
 
-  var currentBlock = randomBlock();
+  var currentBlock;
+
+  initialize();
+
+  function initialize() {
+    currentBlock = randomBlock();
+
+    for (var r = 0; r < FIELD_ROWS; r++) {
+      grid[r] = [];
+      for (var c = 0; c < FIELD_COLS; c++) {
+        grid[r][c] = 0;
+      }
+    }
+  }
 
   function randomBlock() {
-    var i = random(0, BLOCK_TYPES.length);
+    var i = random(0, BLOCK_TYPES.length - 1);
 
     return new Block(BLOCK_TYPES[i]);
   }
 
+  function checkFullLines() {}
+  function checkGameOver() {}
+
   this.draw = function() {
+    drawStrokeRect(gameContext, x, y, width, height, '#fff', 2);
+
     currentBlock.draw(x, y);
 
-    // Debug
-    drawStrokeRect(gameContext, x, y, width, height, '#fff', 2);
-    for (var k in key_held) {
-      if (keys.hasOwnProperty(k) && key_held[k]) {
-        gameContext.fillStyle = '#fff';
-        gameContext.fillText(k, x + 100, y + 100);
+    for (var r = 0; r < grid.length; r++) {
+      for (var c = 0; c < grid[r].length; c++) {
+        if (grid[r][c] !== 0) {
+          gameContext.drawImage(Images.block, 40 * c + x, 40 * r + y);
+        }
       }
     }
   };
@@ -44,11 +60,13 @@ var Playfield = function(controlSchemeId, x) {
     intervalRemaining -= delta;
     if (intervalRemaining < 0) {
       intervalRemaining = TICK_INTERVAL;
-      currentBlock.moveDown(grid);
-
-      // debug
-      var pos = currentBlock.getPosition();
-      if (FIELD_ROWS < pos.y) {
+      if (currentBlock.canGoDown(grid)) {
+        currentBlock.moveDown(grid);
+      }
+      else {
+        currentBlock.copyTo(grid);
+        checkFullLines();
+        checkGameOver();
         currentBlock = randomBlock();
       }
     }
