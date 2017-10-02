@@ -7,7 +7,7 @@ var Playfield = function(controlSchemeId, x) {
   var blocks = [];
   var grid = [];
 
-  var dropSpeed = 0.08;
+  var dropSpeed = 0.008;
 
   var keys = controlSchemes[controlSchemeId]['keys'];
 
@@ -27,12 +27,12 @@ var Playfield = function(controlSchemeId, x) {
   b.place(5, 3);
   blocks.push(b);
 
-  b = new Block(BLOCK_TYPE_T);
-  b.place(5, 6);
-  blocks.push(b);
-
   b = new Block(BLOCK_TYPE_O);
   b.place(1, 2);
+  blocks.push(b);
+
+  b = new Block(BLOCK_TYPE_L);
+  b.place(5, 6);
   blocks.push(b);
 
   this.draw = function() {

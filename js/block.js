@@ -38,22 +38,13 @@ var Block = function(type) {
   };
 
   this.rotate = function(grid) {
-    angle += Math.PI / 2;
-    if (angle === Math.PI * 2) {
-      angle = 0;
-    }
+    state = (state + 1) % shapes.length;
+    shape = shapes[state];
   };
 
   this.drop = function(grid) {
     y += 1;
     isDropping = true;
-  };
-
-  this.nextState = function() {
-    state = (state + 1) % shapes.length;
-    shape = shapes[state];
-
-    return state;
   };
 
   this.draw = function(playfieldX, playfieldY) {
@@ -73,8 +64,8 @@ var Block = function(type) {
       y += dropSpeed * delta;
     }
 
-    if (800 < y) {
-      y = 150;
+    if (FIELD_ROWS < y) {
+      y = 0;
     }
   };
 
