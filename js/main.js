@@ -13,6 +13,8 @@ var settings = {
   controlSchemePlayer2: 3
 };
 
+var blockImages = [];
+
 window.onload = function() {
   gameCanvas = document.getElementById('gameCanvas');
   gameContext = gameCanvas.getContext('2d');
@@ -41,6 +43,18 @@ function gameInitialize(gameMode) {
 
   player1 = new Playfield(settings['controlSchemePlayer1'], 130);
   player2 = new Playfield(settings['controlSchemePlayer2'], 820);
+
+  for (var b = 0; b < BLOCK_TYPES.length; b++) {
+    blockImages[b] = document.createElement('canvas');
+    blockImages[b].width = Images.block.width;
+    blockImages[b].height = Images.block.height;
+    var context = blockImages[b].getContext('2d');
+
+    context.fillStyle = BLOCK_COLORS[b];
+    context.fillRect(0, 0, blockImages[b].width, blockImages[b].height);
+    context.globalCompositeOperation = 'destination-atop';
+    context.drawImage(Images.block, 0, 0);
+  }
 
   MainLoop.start();
 }

@@ -7,16 +7,6 @@ var Block = function(type) {
   var state = 0;
   var shape = shapes[state];
 
-  var canvas = document.createElement('canvas');
-  canvas.width = Images.block.width;
-  canvas.height = Images.block.height;
-  var context = canvas.getContext('2d');
-
-  context.fillStyle = BLOCK_COLORS[type];
-  context.fillRect(0, 0, canvas.width, canvas.height);
-  context.globalCompositeOperation = "destination-atop";
-  context.drawImage(Images.block, 0, 0);
-
   this.getPosition = function() {
     return {
       x: x,
@@ -63,7 +53,10 @@ var Block = function(type) {
     for (var r = 0; r < shape.length; r++) {
       for (var c = 0; c < shape[r].length; c++) {
         if (shape[r][c] !== 0) {
-          grid[y + r][x + c] = shape[r][c];
+          grid[y + r][x + c] = {
+            type: type,
+            block: shape[r][c]
+          };
         }
       }
     }
@@ -79,7 +72,7 @@ var Block = function(type) {
         if (shape[i][j] !== 0) {
           var bx = 40 * (x + j);
           var by = 40 * (y + i);
-          gameContext.drawImage(canvas, bx + playfieldX, by + playfieldY);
+          gameContext.drawImage(blockImages[type], bx + playfieldX, by + playfieldY);
         }
       }
     }

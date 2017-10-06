@@ -51,7 +51,7 @@ var Playfield = function(controlSchemeId, x) {
     for (var r = 0; r < grid.length; r++) {
       for (var c = 0; c < grid[r].length; c++) {
         if (grid[r][c] !== 0) {
-          gameContext.drawImage(Images.block, 40 * c + x, 40 * r + y);
+          gameContext.drawImage(blockImages[grid[r][c].type], 40 * c + x, 40 * r + y);
         }
       }
     }
