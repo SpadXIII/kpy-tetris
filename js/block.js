@@ -4,15 +4,8 @@ var Block = function(type) {
   var y = 0;
 
   var shapes = BLOCK_SHAPES[type];
-  var state = 0;
+  var state = random(0, shapes.length - 1);
   var shape = shapes[state];
-
-  this.getPosition = function() {
-    return {
-      x: x,
-      y: y
-    }
-  };
 
   this.moveLeft = function(grid) {
     if (canMove(grid, 'left')) {
