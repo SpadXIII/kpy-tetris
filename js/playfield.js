@@ -40,7 +40,34 @@ var Playfield = function(controlSchemeId, x) {
     return new Block(BLOCK_TYPES[i]);
   }
 
-  function checkFullLines() {}
+  function checkFullLines() {
+    var fullLines = [];
+    for (var r = 0; r < grid.length; r++) {
+      var isFull = true;
+      for (var c = 0; c < grid[r].length; c++) {
+        isFull = isFull && (grid[r][c] !== 0);
+      }
+
+      if (isFull) {
+        fullLines.push(r);
+      }
+    }
+
+    for (var rowNum = 0; rowNum < fullLines.length; rowNum++) {
+      removeRow(fullLines[rowNum]);
+    }
+  }
+
+  function removeRow(rowNum) {
+    for (var r = rowNum; 0 < r; r--) {
+      grid[r] = grid[r -1];
+    }
+
+    for (var c = 0; c < FIELD_COLS; c++) {
+      grid[0][c] = 0;
+    }
+  }
+
   function checkGameOver() {}
 
   this.draw = function() {
