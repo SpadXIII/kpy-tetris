@@ -7,6 +7,7 @@ const TICK_INTERVAL = 600;
 
 const KEY_ESC = 27;
 const KEY_SPACE = 32;
+const KEY_END = 35;
 
 const KEY_A = 65;
 const KEY_D = 68;
@@ -18,12 +19,14 @@ const KEY_L = 76;
 const KEY_O = 79;
 const KEY_Q = 81;
 const KEY_S = 83;
+const KEY_U = 85;
 const KEY_W = 87;
 const KEY_Z = 90;
 
 const KEY_NUM_4 = 100;
 const KEY_NUM_5 = 101;
 const KEY_NUM_6 = 102;
+const KEY_NUM_7 = 103;
 const KEY_NUM_8 = 104;
 const KEY_NUM_9 = 105;
 
@@ -172,56 +175,61 @@ const BLOCK_SHAPES = [
 // Preset control schemes with keys for: LEFT, RIGHT, ROTATE, DROP, STASH
 var controlSchemes = [];
 controlSchemes[0] = {
-  label: 'WSADE (Qwerty)',
+  label: 'WSADEQ (Qwerty)',
   keys: {
     left: KEY_A,
     right: KEY_D,
     rotate: KEY_W,
-    drop: KEY_S,
+    down: KEY_S,
+    drop: KEY_Q,
     stash: KEY_E
   }
 };
 
 controlSchemes[1] = {
-  label: 'ZSQDE (Azerty)',
+  label: 'ZSQDEA (Azerty)',
   keys: {
     left: KEY_Q,
     right: KEY_D,
     rotate: KEY_Z,
-    drop: KEY_S,
+    down: KEY_S,
+    drop: KEY_A,
     stash: KEY_E
   }
 };
 
 controlSchemes[2] = {
-  label: 'IKJLO',
+  label: 'IKJLOU',
   keys: {
     left: KEY_J,
     right: KEY_L,
     rotate: KEY_I,
-    drop: KEY_K,
+    down: KEY_K,
+    drop: KEY_U,
     stash: KEY_O
   }
 };
 
 controlSchemes[3] = {
-  label: 'Arrows',
+  label: 'Arrows, Enter, End',
   keys: {
     left: KEY_LEFT_ARROW,
     right: KEY_RIGHT_ARROW,
     rotate: KEY_UP_ARROW,
-    drop: KEY_DOWN_ARROW,
+    down: KEY_DOWN_ARROW,
+    drop: KEY_END,
     stash: KEY_ENTER
   }
 };
 
 controlSchemes[4] = {
-  label: 'Numpad (85469)',
+  label: 'Numpad (854697)',
   keys: {
     left: KEY_NUM_4,
     right: KEY_NUM_6,
     rotate: KEY_NUM_8,
-    drop: KEY_NUM_5,
+    down: KEY_NUM_5,
+    drop: KEY_NUM_7,
     stash: KEY_NUM_9
   }
 };

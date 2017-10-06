@@ -24,11 +24,6 @@ var Block = function(type) {
     }
   };
 
-  this.place = function(newX, newY) {
-    x = newX;
-    y = newY;
-  };
-
   this.moveLeft = function(grid) {
     if (canMove(grid, 'left')) {
       x -= 1;

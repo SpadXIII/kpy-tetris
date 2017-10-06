@@ -14,6 +14,7 @@ var Playfield = function(controlSchemeId, x) {
     left: false,
     right: false,
     rotate: false,
+    down: false,
     drop: false,
     stash: false
   };
@@ -74,6 +75,10 @@ var Playfield = function(controlSchemeId, x) {
     if (key_held['drop']) {
       currentBlock.drop(grid);
       key_held['drop'] = false;
+    }
+    if (key_held['down']) {
+      currentBlock.moveDown(grid);
+      key_held['down'] = false;
     }
     if (key_held['rotate']) {
       currentBlock.rotate(grid);
