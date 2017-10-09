@@ -10,6 +10,7 @@ function drawFillRectRotated(canvasContext, topLeftX, topLeftY, boxWidth, boxHei
 
   canvasContext.restore()
 }
+
 function drawFillRect(canvasContext, topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
   canvasContext.fillStyle = fillColor;
   canvasContext.fillRect(topLeftX, topLeftY, boxWidth, boxHeight);

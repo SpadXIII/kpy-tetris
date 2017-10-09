@@ -80,7 +80,17 @@ var Playfield = function(controlSchemeId, x, side) {
   function checkGameOver() {}
 
   this.draw = function() {
-    drawStrokeRect(gameContext, x, y, FIELD_WIDTH, FIELD_HEIGHT, '#fff', 2);
+    gameContext.beginPath();
+    gameContext.strokeStyle = '#fff';
+    gameContext.lineWidth = 2;
+
+    var topPadding = 10;
+    gameContext.moveTo(x, y - topPadding);
+    gameContext.lineTo(x, y + FIELD_HEIGHT);
+    gameContext.lineTo(x + FIELD_WIDTH, y + FIELD_HEIGHT);
+    gameContext.lineTo(x + FIELD_WIDTH, y - topPadding);
+    gameContext.stroke();
+    drawFillRect(gameContext, x + 2, y - topPadding, FIELD_WIDTH - 4, FIELD_HEIGHT + topPadding - 2, '#131313');
 
     currentBlock.draw(x, y);
     nextBlock.draw(x, y);
