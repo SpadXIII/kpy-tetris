@@ -38,22 +38,23 @@ window.onload = function() {
   });
 };
 
-function gameInitialize(gameMode) {
+function gameInitialize() {
   isPlaying = true;
 
-  player1 = new Playfield(settings['controlSchemePlayer1'], 130);
-  player2 = new Playfield(settings['controlSchemePlayer2'], 820);
+  player1 = new Playfield(settings['controlSchemePlayer1'], 130, SIDE_LEFT);
+  player2 = new Playfield(settings['controlSchemePlayer2'], 820, SIDE_RIGHT);
 
   for (var b = 0; b < BLOCK_TYPES.length; b++) {
     blockImages[b] = document.createElement('canvas');
-    blockImages[b].width = Images.block.width;
-    blockImages[b].height = Images.block.height;
+    blockImages[b].width = BLOCK_WIDTH;
+    blockImages[b].height = BLOCK_HEIGHT;
+
     var context = blockImages[b].getContext('2d');
 
     context.fillStyle = BLOCK_COLORS[b];
     context.fillRect(0, 0, blockImages[b].width, blockImages[b].height);
     context.globalCompositeOperation = 'destination-atop';
-    context.drawImage(Images.block, 0, 0);
+    context.drawImage(Images.block, 0, 0, Images.block.width, Images.block.height, 0, 0, BLOCK_WIDTH, BLOCK_HEIGHT);
   }
 
   MainLoop.start();

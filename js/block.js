@@ -3,9 +3,21 @@ var Block = function(type) {
   var x = 5;
   var y = 0;
 
+  var isActive = false;
   var shapes = BLOCK_SHAPES[type];
   var state = random(0, shapes.length - 1);
   var shape = shapes[state];
+
+  this.setPosition = function(_x, _y) {
+    x = _x;
+    y = _y;
+  };
+
+  this.activate = function() {
+    isActive = true;
+    x = 5;
+    y = 0;
+  };
 
   this.moveLeft = function(grid) {
     if (canMove(grid, 'left')) {
@@ -63,8 +75,8 @@ var Block = function(type) {
     for (var i = 0; i < shape.length; i++) {
       for (var j = 0; j < shape[i].length; j++) {
         if (shape[i][j] !== 0) {
-          var bx = 40 * (x + j);
-          var by = 40 * (y + i);
+          var bx = BLOCK_WIDTH * (x + j);
+          var by = BLOCK_HEIGHT * (y + i);
           gameContext.drawImage(blockImages[type], bx + playfieldX, by + playfieldY);
         }
       }
@@ -94,6 +106,10 @@ var Block = function(type) {
   }
 
   function canMove(grid, action) {
+    if (!isActive) {
+      return false;
+    }
+
     var rows = grid.length;
     var cols = grid[0].length;
 

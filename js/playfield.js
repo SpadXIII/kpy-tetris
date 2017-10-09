@@ -1,8 +1,6 @@
-var Playfield = function(controlSchemeId, x) {
+var Playfield = function(controlSchemeId, x, side) {
 
   var y = 100;
-  var width = 400;
-  var height = 600;
 
   var grid = [];
 
@@ -20,11 +18,13 @@ var Playfield = function(controlSchemeId, x) {
   };
 
   var currentBlock;
+  var nextBlock;
 
   initialize();
 
   function initialize() {
-    currentBlock = randomBlock();
+    nextBlock = randomBlock();
+    setNextBlock();
 
     for (var r = 0; r < FIELD_ROWS; r++) {
       grid[r] = [];
@@ -38,6 +38,15 @@ var Playfield = function(controlSchemeId, x) {
     var i = random(0, BLOCK_TYPES.length - 1);
 
     return new Block(BLOCK_TYPES[i]);
+  }
+
+  function setNextBlock() {
+    currentBlock = nextBlock;
+    currentBlock.activate();
+    nextBlock = randomBlock();
+
+    var blockX = (side === SIDE_RIGHT) ? -5 : 11;
+    nextBlock.setPosition(blockX, 0);
   }
 
   function checkFullLines() {
@@ -71,14 +80,15 @@ var Playfield = function(controlSchemeId, x) {
   function checkGameOver() {}
 
   this.draw = function() {
-    drawStrokeRect(gameContext, x, y, width, height, '#fff', 2);
+    drawStrokeRect(gameContext, x, y, FIELD_WIDTH, FIELD_HEIGHT, '#fff', 2);
 
     currentBlock.draw(x, y);
+    nextBlock.draw(x, y);
 
     for (var r = 0; r < grid.length; r++) {
       for (var c = 0; c < grid[r].length; c++) {
         if (grid[r][c] !== 0) {
-          gameContext.drawImage(blockImages[grid[r][c].type], 40 * c + x, 40 * r + y);
+          gameContext.drawImage(blockImages[grid[r][c].type], BLOCK_WIDTH * c + x, BLOCK_HEIGHT * r + y);
         }
       }
     }
@@ -95,7 +105,7 @@ var Playfield = function(controlSchemeId, x) {
         currentBlock.copyTo(grid);
         checkFullLines();
         checkGameOver();
-        currentBlock = randomBlock();
+        setNextBlock();
       }
     }
 

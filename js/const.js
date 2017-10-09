@@ -2,7 +2,16 @@
 const DEBUG = true;
 
 const FIELD_COLS = 10;
-const FIELD_ROWS = 15;
+const FIELD_ROWS = 20;
+
+const FIELD_WIDTH = 300;
+const FIELD_HEIGHT = 600;
+const BLOCK_WIDTH = FIELD_WIDTH / FIELD_COLS;
+const BLOCK_HEIGHT = FIELD_HEIGHT / FIELD_ROWS;
+
+const SIDE_LEFT = 0;
+const SIDE_RIGHT = 1;
+
 const TICK_INTERVAL = 600;
 
 const KEY_ESC = 27;
