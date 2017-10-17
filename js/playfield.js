@@ -77,7 +77,12 @@ var Playfield = function(controlSchemeId, x, side) {
     }
   }
 
-  function checkGameOver() {}
+  function checkGameOver() {
+    if (!currentBlock.canGoDown(grid)) {
+      isGameOver = true;
+      showGameOver();
+    }
+  }
 
   this.draw = function() {
     gameContext.beginPath();
@@ -105,6 +110,10 @@ var Playfield = function(controlSchemeId, x, side) {
   };
 
   this.update = function(delta) {
+    if (isGameOver) {
+      return;
+    }
+
     intervalRemaining -= delta;
     if (intervalRemaining < 0) {
       intervalRemaining = TICK_INTERVAL;
@@ -114,8 +123,8 @@ var Playfield = function(controlSchemeId, x, side) {
       else {
         currentBlock.copyTo(grid);
         checkFullLines();
-        checkGameOver();
         setNextBlock();
+        checkGameOver();
       }
     }
 

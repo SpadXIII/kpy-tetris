@@ -10,6 +10,7 @@ function menuInitialize() {
   $('#wrapper a').on('click', function (event) {
     event.preventDefault();
 
+    stopGameForMenu();
     $activeWrapperScreen.hide();
     $activeWrapperScreen = $(this.hash).show();
 
@@ -28,17 +29,26 @@ function menuInitialize() {
 }
 
 function showMenu() {
-  if (isPlaying) {
-    isPlaying = false;
-    MainLoop.stop();
-    clearCanvas();
-  }
+  stopGameForMenu();
 
   if ($activeWrapperScreen) {
     $activeWrapperScreen.hide();
   }
 
   $activeWrapperScreen = $('#menu').show();
+}
+
+function stopGameForMenu() {
+  if (isPlaying || isGameOver) {
+    isPlaying = false;
+    isGameOver = false;
+    MainLoop.stop();
+    clearCanvas();
+  }
+}
+
+function showGameOver() {
+  $activeWrapperScreen = $('#gameOver').show();
 }
 
 function settingsInitialize(player) {
@@ -54,7 +64,7 @@ function settingsInitialize(player) {
         setSetting('controlSchemePlayer' + player, this.value);
       });
 
-    if (settings['controlSchemePlayer' + player] == i) {
+    if (settings['controlSchemePlayer' + player] === i) {
       $option.attr('checked', 'checked');
     }
 

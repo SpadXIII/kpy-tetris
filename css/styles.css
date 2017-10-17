@@ -49,7 +49,8 @@ h1, h2, h3 {
     min-height: 250px;
     padding: 2em;
     text-align: center;
-
+    background: rgba(20, 20, 20, .9);
+    border: ridge 4px #ccc;
 }
 
 #wrapper .back {

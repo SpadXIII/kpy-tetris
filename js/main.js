@@ -5,6 +5,7 @@ var screenShakeAmount = 0;
 var screenShakeAmountHalf = 0;
 
 var isPlaying = false;
+var isGameOver = false;
 
 var player1, player2;
 
