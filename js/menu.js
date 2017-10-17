@@ -49,6 +49,9 @@ function stopGameForMenu() {
 
 function showGameOver() {
   $activeWrapperScreen = $('#gameOver').show();
+
+  $activeWrapperScreen.find('.player-won').text('Player ' + (player1.hasLost() ? 2 : 1));
+  $activeWrapperScreen.find('.player-lost').text('player ' + (player1.hasLost() ? 1 : 2));
 }
 
 function settingsInitialize(player) {

@@ -20,6 +20,8 @@ var Playfield = function(controlSchemeId, x, side) {
   var currentBlock;
   var nextBlock;
 
+  var lost = false;
+
   initialize();
 
   function initialize() {
@@ -77,9 +79,14 @@ var Playfield = function(controlSchemeId, x, side) {
     }
   }
 
+  this.hasLost = function() {
+    return lost;
+  };
+
   function checkGameOver() {
     if (!currentBlock.canGoDown(grid)) {
       isGameOver = true;
+      lost = true;
       showGameOver();
     }
   }
