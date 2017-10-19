@@ -20,7 +20,15 @@ h1, h2, h3 {
     margin: 0 0 1em 0;
 }
 
-#wrapper,
+ul {
+    list-style: none;
+    padding: 0px;
+}
+
+[type=radio] {
+    display: none;
+}
+
 #drawCanvas {
     position: absolute;
     top: 50%;
@@ -32,53 +40,159 @@ h1, h2, h3 {
     position: relative;
     width: 100%;
     height: 100%;
+    background-image: url('../img/background.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
 #loading {
     height: 60px;
 }
 
+/* ========= LOGO ========= */
+#logo {
+    position: absolute;
+    left: 50%; top: 20px;
+    margin-left: -150px;
+    width: 300px;
+    z-index: 0;
+    opacity: 0.6;
+}
+
+/* ========= MENU WRAPPER ========= */
 #wrapper {
-    width: 100%;
-    top: 25%;
+    position: absolute;
+    left: 0; top: 25%; right: 0;
 }
 
-#wrapper > div {
-    width: 50%;
-    margin: 0 auto;
-    min-height: 250px;
-    padding: 2em;
-    text-align: center;
-    background: rgba(20, 20, 20, .9);
-    border: ridge 4px #ccc;
-}
 
-#wrapper .back {
-    display: inline-block;
-    padding-top: 1em;
-}
-
-.menu {
+/* ========= MENU GENERAL ========= */
+.menu, 
+#menu > h2,
+#settings > h2 {
     display: none;
+}
+
+#wrapper > #menu {
+    position: absolute;
+    left: 40px;
+    text-align: left;
+}
+
+.back {
+    float: left;
+    width: 40%;
+    margin-left: 30%;
+    background: #FCBC37;
+    text-align: center;
+    margin-top: 40px;
+    border-radius: 2px;
+    box-shadow: 0px 0px 50px #fc2f89, 0px 0px 5px #352861;
+    padding: 10px 0px;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: italic;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.bg-block {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    background: linear-gradient(to bottom, #fbee00 0%,#fcbc37 100%);
+    border-radius: 2px;
+    box-shadow: 0px 0px 50px #fc2f89, 0px 0px 5px #352861;
+    padding-bottom: 20px;
+    text-shadow: 2px 0px 2px deeppink, -2px 0px 2px green;
+}
+
+
+/* ========= MAIN MENU ========= */
+@keyframes twitch {
+      0% {text-shadow: 4px  2px 0px #006FFF, -3px  2px 0px #FF00F3;}
+     10% {text-shadow: 4px  3px 0px #006FFF, -4px  2px 0px #FF00F3;}
+     20% {text-shadow: 6px  4px 0px #006FFF, -2px  2px 0px #FF00F3;}
+     25% {text-shadow: 5px  2px 0px #006FFF, -1px  1px 0px #FF00F3;}
+     30% {text-shadow: 2px  3px 0px #006FFF, -4px  4px 0px #FF00F3;}
+     40% {text-shadow: 5px  1px 0px #006FFF, -3px  2px 0px #FF00F3;}
+     50% {text-shadow: 3px -2px 0px #006FFF, -5px  3px 0px #FF00F3;}
+     60% {text-shadow: 6px -1px 0px #006FFF, -2px  1px 0px #FF00F3;}
+     70% {text-shadow: 5px  3px 0px #006FFF, -1px  2px 0px #FF00F3;}
+     75% {text-shadow: 6px  4px 0px #006FFF, -2px  2px 0px #FF00F3;}
+     80% {text-shadow: 2px  4px 0px #006FFF, -3px  1px 0px #FF00F3;}
+     90% {text-shadow: 3px  1px 0px #006FFF, -4px  4px 0px #FF00F3;}
+    100% {text-shadow: 4px  2px 0px #006FFF, -3px  2px 0px #FF00F3;}
+}
+
+#menu > ul > li > a {
+    text-decoration: none;
+    float: left;
+    clear: both;
+    margin: 10px 0px;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 42px;
+    text-shadow: 4px 2px 0px #006FFF, -3px 2px 0px #FF00F3;
+    transition: all 0.3s;
+}
+
+#menu > ul > li > a:hover {
+    animation: twitch 0.2s infinite;
+    transform: scale(1.1,1.1) rotate(-2deg);
+}
+
+
+/* ========= SETTINGS ========= */
+#settings > div {
+    float: left;
+    width: 50%;
+    margin: 0px 25%;
 }
 
 #settings > div > div {
     float: left;
-    width: 45%;
+    width: 40%;
+    margin: 0px 5%;
 }
 
-#settings > div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    align-content: center;
+#settings ul label {
+    float: left;
+    position: relative;
+    width: 100%;
+    margin: 10px 0px;
+    padding: 5px 0px;
+    color: #FFF;
+    text-transform: uppercase;
+    font-style: italic;
+    cursor: pointer;
 }
 
-ul, li {
-    margin: 0;
-    padding: 0;
+#settings h3, .bg-block h2 {
+    margin-top: 20px;
+    color: #FFF;
+    text-transform: uppercase;
+    /* text-shadow: 2px 0px 2px deeppink, -2px 0px 2px green; */
+    text-shadow: 1px 2px 3px #FFF inset;
+    width: 110%;
+    background: #531b5d;
+    margin-left: -5%;
+    padding: 10px 0px;
+    box-shadow: 0px 0px 20px #b210b8;
+    font-style: italic;
+    letter-spacing: 4px;
 }
 
-li {
-    list-style: none;
+#settings [type=radio]:checked ~ li:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    border-top: 2px solid #FFF;
+    border-bottom: 2px solid #FFF;
+    background: linear-gradient(to right, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.6) 100%);
 }
