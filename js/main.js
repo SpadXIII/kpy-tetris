@@ -44,6 +44,8 @@ function gameInitialize() {
 
   player1 = new Playfield(settings['controlSchemePlayer1'], 130, SIDE_LEFT);
   player2 = new Playfield(settings['controlSchemePlayer2'], 820, SIDE_RIGHT);
+  player1.setOther(player2);
+  player2.setOther(player1);
 
   for (var b = 0; b < BLOCK_TYPES.length; b++) {
     blockImages[b] = document.createElement('canvas');
