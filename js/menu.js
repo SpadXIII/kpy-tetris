@@ -67,11 +67,11 @@ function settingsInitialize(player) {
         setSetting('controlSchemePlayer' + player, this.value);
       });
 
-    if (settings['controlSchemePlayer' + player] === i) {
-      $option.attr('checked', 'checked');
+    if (settings['controlSchemePlayer' + player] == i) {
+      $option.prop('checked', 'checked');
     }
 
-    $list.append($label.prepend($option).append('<li></li>'));
+    $list.append($('<li></li>').append($label.prepend($option)));
   }
 
   $div.append($list);
