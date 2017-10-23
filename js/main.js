@@ -47,6 +47,11 @@ function gameInitialize() {
   player1.setOther(player2);
   player2.setOther(player1);
 
+  if (DEBUG) {
+    // Make player 2 run a lot slower to test more easily
+    player2.setInterval(TICK_INTERVAL * 4);
+  }
+
   for (var b = 0; b < BLOCK_TYPES.length; b++) {
     blockImages[b] = document.createElement('canvas');
     blockImages[b].width = BLOCK_WIDTH;

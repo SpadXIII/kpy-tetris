@@ -5,7 +5,9 @@ var Playfield = function(controlSchemeId, x, side) {
 
   var grid = [];
 
-  var intervalRemaining = TICK_INTERVAL;
+  var interval = TICK_INTERVAL;
+
+  var intervalRemaining = interval;
 
   var keys = controlSchemes[controlSchemeId]['keys'];
 
@@ -30,6 +32,10 @@ var Playfield = function(controlSchemeId, x, side) {
 
   this.g = function() {
     console.log(grid);
+  };
+
+  this.setInterval = function(_interval) {
+    interval = _interval;
   };
 
   function initialize() {
@@ -175,7 +181,7 @@ var Playfield = function(controlSchemeId, x, side) {
 
     intervalRemaining -= delta;
     if (intervalRemaining < 0) {
-      intervalRemaining = TICK_INTERVAL;
+      intervalRemaining = interval;
       if (currentBlock.canGoDown(grid)) {
         currentBlock.moveDown(grid);
       }
