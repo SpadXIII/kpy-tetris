@@ -1,6 +1,7 @@
 var Playfield = function(controlSchemeId, x, side) {
 
   var y = 100;
+  var other;
 
   var grid = [];
 
@@ -22,7 +23,14 @@ var Playfield = function(controlSchemeId, x, side) {
 
   var lost = false;
 
+  var numCleared = 0;
+  var numInsertedRows = 0;
+
   initialize();
+
+  this.g = function() {
+    console.log(grid);
+  };
 
   function initialize() {
     nextBlock = randomBlock();
@@ -35,6 +43,10 @@ var Playfield = function(controlSchemeId, x, side) {
       }
     }
   }
+
+  this.setOther = function(_other) {
+    other = _other;
+  };
 
   function randomBlock() {
     var i = random(0, BLOCK_TYPES.length - 1);
@@ -65,6 +77,7 @@ var Playfield = function(controlSchemeId, x, side) {
     }
 
     for (var rowNum = 0; rowNum < fullLines.length; rowNum++) {
+      numCleared++;
       removeRow(fullLines[rowNum]);
     }
   }
@@ -78,6 +91,45 @@ var Playfield = function(controlSchemeId, x, side) {
       grid[0][c] = 0;
     }
   }
+
+  function insertClearedRowsInOtherPlayfield() {
+    var numToInsert = Math.floor(numCleared / INSERT_AFTER_NUM_CLEARED_ROWS);
+    if (numCleared === 0 || numToInsert <= numInsertedRows) {
+      return;
+    }
+
+    while (numInsertedRows < numToInsert) {
+      other.insertRow();
+      numInsertedRows++;
+    }
+  }
+
+  this.insertRow = function() {
+    var r;
+    // Move all rows up 1
+    for (r = 0; r < FIELD_ROWS - 1; r++) {
+      grid[r] = grid[r + 1];
+    }
+
+    // Insert new row of random type
+    r = FIELD_ROWS - 1;
+    var type = random(0, BLOCK_TYPES.length - 1);
+    var row = [];
+    for (var c = 0; c < FIELD_COLS; c++) {
+      if (random(1, 3) === 1) {
+        row[c] = 0;
+      }
+      else {
+        row[c] = {
+          type: type,
+          block: 1
+        };
+      }
+    }
+
+    grid[r] = row;
+
+  };
 
   this.hasLost = function() {
     return lost;
@@ -132,6 +184,7 @@ var Playfield = function(controlSchemeId, x, side) {
         checkFullLines();
         setNextBlock();
         checkGameOver();
+        insertClearedRowsInOtherPlayfield();
       }
     }
 
