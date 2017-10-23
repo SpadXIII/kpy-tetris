@@ -90,7 +90,9 @@ var Playfield = function(controlSchemeId, x, side) {
 
   function removeRow(rowNum) {
     for (var r = rowNum; 0 < r; r--) {
-      grid[r] = grid[r -1];
+      for (var c = 0; c < FIELD_COLS; c++) {
+        grid[r][c] = grid[r - 1][c];
+      }
     }
 
     for (var c = 0; c < FIELD_COLS; c++) {
