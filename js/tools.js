@@ -18,6 +18,10 @@ if (!console.log) {
   console.log = function() {};
 }
 
+function clone(item) {
+  return JSON.parse(JSON.stringify(item));
+}
+
 function random(min, max, isFloat) {
   if (isFloat) {
     return Math.min(min + (Math.random() * (max - min + parseFloat('1e-' + ((Math.random() + '').length - 1)))), max);

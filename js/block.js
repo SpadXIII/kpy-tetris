@@ -1,10 +1,47 @@
-var Block = function(type) {
+var Block = function(type, powerUp) {
 
   var x = 5;
   var y = 0;
 
   var isActive = false;
-  var shapes = BLOCK_SHAPES[type];
+  var shapes = [
+    clone(BLOCK_SHAPES[type])
+  ];
+
+  if (powerUp !== SHAPE_TYPE_NORMAL) {
+    // Add power up at random location
+    var powerUpAdded = false;
+    while (!powerUpAdded) {
+      var pX = random(0, shapes[0].length - 1);
+      var pY = random(0, shapes[0][0].length - 1);
+
+      if (shapes[0][pX][pY]) {
+        shapes[0][pX][pY] = powerUp;
+        powerUpAdded = true;
+      }
+    }
+  }
+
+  // Rotate shape 3 times
+  for (var r = 1; r < 4; r++) {
+    shapes[r] = rotateShape(shapes[r - 1]);
+  }
+
+  function rotateShape(shape) {
+    var new_shape = clone(shape);
+    new_shape = new_shape.reverse();
+
+    for (var i = 0; i < new_shape.length; i++) {
+      for (var j = 0; j < i; j++) {
+        var temp = new_shape[i][j];
+        new_shape[i][j] = new_shape[j][i];
+        new_shape[j][i] = temp;
+      }
+    }
+
+    return new_shape;
+  }
+
   var state = random(0, shapes.length - 1);
   var shape = shapes[state];
 
@@ -74,7 +111,7 @@ var Block = function(type) {
   this.draw = function(playfieldX, playfieldY) {
     for (var i = 0; i < shape.length; i++) {
       for (var j = 0; j < shape[i].length; j++) {
-        if (shape[i][j] !== 0) {
+        if (shape[i][j]) {
           var bx = BLOCK_WIDTH * (x + j);
           var by = BLOCK_HEIGHT * (y + i);
           gameContext.drawImage(blockImages[shape[i][j]][type], bx + playfieldX, by + playfieldY);

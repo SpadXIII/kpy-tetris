@@ -53,7 +53,12 @@ var Playfield = function(controlSchemeId, x, side) {
   function randomBlock() {
     var i = random(0, BLOCK_TYPES.length - 1);
 
-    return new Block(BLOCK_TYPES[i]);
+    var shapeType = SHAPE_TYPE_NORMAL;
+    if (random(0, 60) <= 13) {
+      shapeType = SHAPE_TYPES[random(0, SHAPE_TYPES.length - 1)];
+    }
+
+    return new Block(BLOCK_TYPES[i], shapeType);
   }
 
   function setNextBlock() {
