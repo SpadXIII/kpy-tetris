@@ -30,10 +30,6 @@ var Playfield = function(controlSchemeId, x, side) {
 
   initialize();
 
-  this.g = function() {
-    console.log(grid);
-  };
-
   this.setInterval = function(_interval) {
     interval = _interval;
   };
@@ -89,13 +85,14 @@ var Playfield = function(controlSchemeId, x, side) {
   }
 
   function removeRow(rowNum) {
-    for (var r = rowNum; 0 < r; r--) {
-      for (var c = 0; c < FIELD_COLS; c++) {
+    var r, c;
+    for (r = rowNum; 0 < r; r--) {
+      for (c = 0; c < FIELD_COLS; c++) {
         grid[r][c] = grid[r - 1][c];
       }
     }
 
-    for (var c = 0; c < FIELD_COLS; c++) {
+    for (c = 0; c < FIELD_COLS; c++) {
       grid[0][c] = 0;
     }
   }
@@ -121,22 +118,17 @@ var Playfield = function(controlSchemeId, x, side) {
 
     // Insert new row of random type
     r = FIELD_ROWS - 1;
+    grid[r] = [];
     var type = random(0, BLOCK_TYPES.length - 1);
-    var row = [];
     for (var c = 0; c < FIELD_COLS; c++) {
-      if (random(1, 3) === 1) {
-        row[c] = 0;
-      }
-      else {
-        row[c] = {
+      grid[r][c] = 0;
+      if (1 < random(1, 6)) {
+        grid[r][c] = {
           type: type,
           block: 1
         };
       }
     }
-
-    grid[r] = row;
-
   };
 
   this.hasLost = function() {
@@ -174,6 +166,15 @@ var Playfield = function(controlSchemeId, x, side) {
         }
       }
     }
+
+    // Progress bar
+    drawFillRect(gameContext, x, y + FIELD_HEIGHT + 5, FIELD_WIDTH, 15, '#131313');
+    var progressFillPercentage = numCleared % INSERT_AFTER_NUM_CLEARED_ROWS;
+    if (0 < numCleared && 0 < progressFillPercentage) {
+      var progressBarWidth = FIELD_WIDTH / INSERT_AFTER_NUM_CLEARED_ROWS * progressFillPercentage;
+      drawFillRect(gameContext, x, y + FIELD_HEIGHT + 5, progressBarWidth, 15, '#fc2f89');
+    }
+    drawStrokeRect(gameContext, x, y + FIELD_HEIGHT + 5, FIELD_WIDTH, 15, '#fff', 2);
   };
 
   this.update = function(delta) {

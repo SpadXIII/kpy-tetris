@@ -14,7 +14,7 @@ const SIDE_RIGHT = 1;
 
 const TICK_INTERVAL = 600;
 
-const INSERT_AFTER_NUM_CLEARED_ROWS = 5;
+const INSERT_AFTER_NUM_CLEARED_ROWS = 6;
 
 const KEY_ESC = 27;
 const KEY_SPACE = 32;
