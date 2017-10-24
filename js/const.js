@@ -47,6 +47,16 @@ const KEY_RIGHT_ARROW = 39;
 const KEY_DOWN_ARROW = 40;
 const KEY_ENTER = 13;
 
+const SHAPE_TYPE_NORMAL = 1;
+const SHAPE_TYPE_SPEED_UP = 2;
+const SHAPE_TYPES = [
+  SHAPE_TYPE_NORMAL,
+  SHAPE_TYPE_SPEED_UP
+];
+var SHAPE_IMAGES = [];
+SHAPE_IMAGES[SHAPE_TYPE_NORMAL] = 'block';
+SHAPE_IMAGES[SHAPE_TYPE_SPEED_UP] = 'block_speed_up';
+
 const BLOCK_TYPE_I = 0;
 const BLOCK_TYPE_J = 1;
 const BLOCK_TYPE_L = 2;

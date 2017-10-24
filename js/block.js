@@ -77,7 +77,7 @@ var Block = function(type) {
         if (shape[i][j] !== 0) {
           var bx = BLOCK_WIDTH * (x + j);
           var by = BLOCK_HEIGHT * (y + i);
-          gameContext.drawImage(blockImages[type], bx + playfieldX, by + playfieldY);
+          gameContext.drawImage(blockImages[shape[i][j]][type], bx + playfieldX, by + playfieldY);
         }
       }
     }

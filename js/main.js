@@ -52,20 +52,34 @@ function gameInitialize() {
     player2.setInterval(TICK_INTERVAL * 4);
   }
 
-  for (var b = 0; b < BLOCK_TYPES.length; b++) {
-    blockImages[b] = document.createElement('canvas');
-    blockImages[b].width = BLOCK_WIDTH;
-    blockImages[b].height = BLOCK_HEIGHT;
+  for (var s = 0; s < SHAPE_TYPES.length; s++) {
+    var shapeType = SHAPE_TYPES[s];
+    if (!blockImages[shapeType]) {
+      blockImages[shapeType] = [];
+    }
 
-    var context = blockImages[b].getContext('2d');
-
-    context.fillStyle = BLOCK_COLORS[b];
-    context.fillRect(0, 0, blockImages[b].width, blockImages[b].height);
-    context.globalCompositeOperation = 'destination-atop';
-    context.drawImage(Images.block, 0, 0, Images.block.width, Images.block.height, 0, 0, BLOCK_WIDTH, BLOCK_HEIGHT);
+    for (var b = 0; b < BLOCK_TYPES.length; b++) {
+      var blockType = BLOCK_TYPES[b];
+      blockImages[shapeType][blockType] = generateBlockImage(Images[SHAPE_IMAGES[shapeType]], BLOCK_COLORS[b]);
+    }
   }
 
   MainLoop.start();
+}
+
+function generateBlockImage(image, color) {
+  var block = document.createElement('canvas');
+  block.width = BLOCK_WIDTH;
+  block.height = BLOCK_HEIGHT;
+
+  var context = block.getContext('2d');
+
+  context.fillStyle = color;
+  context.fillRect(0, 0, block.width, block.height);
+  context.globalCompositeOperation = 'destination-atop';
+  context.drawImage(image, 0, 0, image.width, image.height, 0, 0, BLOCK_WIDTH, BLOCK_HEIGHT);
+
+  return block;
 }
 
 function setSetting(setting, value) {
