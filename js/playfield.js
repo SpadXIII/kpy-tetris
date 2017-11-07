@@ -28,6 +28,8 @@ var Playfield = function(controlSchemeId, x, side) {
   var numCleared = 0;
   var numInsertedRows = 0;
 
+  var powerUps = [];
+
   initialize();
 
   this.setInterval = function(_interval) {
@@ -37,6 +39,7 @@ var Playfield = function(controlSchemeId, x, side) {
   function initialize() {
     nextBlock = randomBlock();
     setNextBlock();
+    powerUps = [];
 
     for (var r = 0; r < FIELD_ROWS; r++) {
       grid[r] = [];
@@ -48,6 +51,42 @@ var Playfield = function(controlSchemeId, x, side) {
 
   this.setOther = function(_other) {
     other = _other;
+  };
+
+  this.createHoles = function() {
+    var holes = [];
+    var r, c;
+    var num = random(5, 10);
+
+    var topRow = grid.length - 1;
+    for (r = topRow; 0 <= r ; r--) {
+      for (c = 0; c < grid[r].length; c++) {
+        if (grid[r][c] !== 0) {
+          topRow = r;
+          break;
+        }
+      }
+      if (topRow !== r) {
+        break;
+      }
+    }
+
+    for (var i = 0; i < num; i++) {
+      r = random(topRow, grid.length - 1);
+      c = random(0, grid[0].length - 1);
+
+      if (grid[r][c] !== 0) {
+        holes.push({
+          r: r,
+          c: c,
+          type: grid[r][c].type,
+          block: grid[r][c].block
+        });
+        grid[r][c] = 0;
+      }
+    }
+
+    return holes;
   };
 
   function randomBlock() {
@@ -89,7 +128,25 @@ var Playfield = function(controlSchemeId, x, side) {
     }
   }
 
+  this.test = function() {
+    createPowerup(SHAPE_TYPE_HOLES, this, other);
+  };
+
+
+  this.pushPowerUp = function(powerUp) {
+    if (powerUp) {
+      powerUps.push(powerUp);
+    }
+  };
+
   function removeRow(rowNum) {
+    // Check for powerUps
+    for (c = 0; c < FIELD_COLS; c++) {
+      if (grid[rowNum][c].block !== SHAPE_TYPE_NORMAL) {
+        createPowerup(grid[rowNum][c].block, this, other);
+      }
+    }
+
     var r, c;
     for (r = rowNum; 0 < r; r--) {
       for (c = 0; c < FIELD_COLS; c++) {
@@ -148,6 +205,10 @@ var Playfield = function(controlSchemeId, x, side) {
     }
   }
 
+  this.drawBlock = function(block, type, c, r) {
+    gameContext.drawImage(blockImages[block][type], BLOCK_WIDTH * c + x, BLOCK_HEIGHT * r + y);
+  };
+
   this.draw = function() {
     gameContext.beginPath();
     gameContext.strokeStyle = '#fff';
@@ -167,9 +228,13 @@ var Playfield = function(controlSchemeId, x, side) {
     for (var r = 0; r < grid.length; r++) {
       for (var c = 0; c < grid[r].length; c++) {
         if (grid[r][c] !== 0) {
-          gameContext.drawImage(blockImages[grid[r][c].block][grid[r][c].type], BLOCK_WIDTH * c + x, BLOCK_HEIGHT * r + y);
+          this.drawBlock(grid[r][c].block, grid[r][c].type, c, r);
         }
       }
+    }
+
+    for (var p = 0; p < powerUps.length; p++) {
+      powerUps[p].draw();
     }
 
     // Progress bar
@@ -221,6 +286,14 @@ var Playfield = function(controlSchemeId, x, side) {
     if (key_held['right']) {
       currentBlock.moveRight(grid);
       key_held['right'] = false;
+    }
+
+
+    for (var p = powerUps.length - 1; 0 <= p; p--) {
+      powerUps[p].update(delta);
+      if (powerUps[p].isReadyToRemove) {
+        powerUps.splice(p, 1);
+      }
     }
   };
 

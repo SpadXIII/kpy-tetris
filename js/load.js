@@ -2,7 +2,8 @@ var Images = new (function() {
   var images = {
     // key: 'img/image_name.png'
     block: 'img/block.png',
-    block_speed_up: 'img/block-speed-up.png'
+    block_speed_up: 'img/block-speed-up.png',
+    block_holes: 'img/block-holes.png'
   };
 
   this.initialize = function(callback) {
