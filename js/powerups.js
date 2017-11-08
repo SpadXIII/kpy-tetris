@@ -15,11 +15,14 @@ var PowerUpSpeedUp = function(player) {
 
   var timeRemaining = SPEED_UP_FADE_TIME;
 
-  player.setIntervalMultiplier(20);
+  player.setIntervalMultiplier(3);
+
+  var posX = (player.getSide() === SIDE_RIGHT) ? 145 : -175;
+  posX += gameCanvas.width / 2;
 
   this.draw = function() {
     var perc = Math.round(((SPEED_UP_FADE_TIME - timeRemaining) / SPEED_UP_FADE_TIME) * 100) / 100;
-    // @todo draw a little icon with a circular line around it
+    drawStrokeCircle(gameContext, posX, 280, 20, perc, 'white', 4);
   };
 
   this.update = function(delta) {

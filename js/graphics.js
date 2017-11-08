@@ -27,3 +27,13 @@ function drawStrokeRect(canvasContext, topLeftX, topLeftY, boxWidth, boxHeight, 
     canvasContext.lineWidth = oldLineWidth;
   }
 }
+
+function drawStrokeCircle(canvasContext, x, y, radius, percentage, strokeColor, lineWidth) {
+  startAngle = Math.PI * -0.5;
+  endAngle = Math.PI * 2 * percentage + startAngle;
+  canvasContext.strokeStyle = strokeColor;
+  canvasContext.lineWidth = lineWidth;
+  canvasContext.beginPath();
+  canvasContext.arc(x, y, radius, startAngle, endAngle, false);
+  canvasContext.stroke();
+}

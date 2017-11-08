@@ -46,6 +46,10 @@ var Playfield = function(controlSchemeId, x, side) {
     intervalMultiplier = 1;
   };
 
+  this.getSide = function() {
+    return side;
+  };
+
   function initialize() {
     nextBlock = randomBlock();
     setNextBlock();
