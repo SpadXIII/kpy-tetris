@@ -1,7 +1,7 @@
 function createPowerup(type, player, other) {
   switch (type) {
     case SHAPE_TYPE_SPEED_UP:
-      other.pushPowerUp(new PowerUpSpeedUp(player, other));
+      other.pushPowerUp(new PowerUpSpeedUp(other));
       break;
     case SHAPE_TYPE_HOLES:
       other.pushPowerUp(new PowerUpHoles(other));
@@ -9,17 +9,25 @@ function createPowerup(type, player, other) {
   }
 }
 
-var PowerUpSpeedUp = function(player, other) {
+var PowerUpSpeedUp = function(player) {
 
   this.isReadyToRemove = false;
 
-  var timeRemaining = 2000;
+  var timeRemaining = SPEED_UP_FADE_TIME;
 
-  this.draw = function() {};
+  player.setIntervalMultiplier(20);
+
+  this.draw = function() {
+    var perc = Math.round(((SPEED_UP_FADE_TIME - timeRemaining) / SPEED_UP_FADE_TIME) * 100) / 100;
+    // @todo draw a little icon with a circular line around it
+  };
 
   this.update = function(delta) {
     timeRemaining -= delta;
-    this.isReadyToRemove = (0 < timeRemaining);
+    this.isReadyToRemove = (timeRemaining <= 0);
+    if (this.isReadyToRemove) {
+      player.unsetIntervalMultiplier();
+    }
   };
 
 };
