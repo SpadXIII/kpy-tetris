@@ -1,4 +1,4 @@
-function createPowerup(type, player, other) {
+function createPowerup(type, player, other, addRowsForPowerup) {
   switch (type) {
     case SHAPE_TYPE_SPEED_UP:
       other.pushPowerUp(new PowerUpSpeedUp(other));
@@ -6,8 +6,19 @@ function createPowerup(type, player, other) {
     case SHAPE_TYPE_HOLES:
       other.pushPowerUp(new PowerUpHoles(other));
       break;
+    case SHAPE_TYPE_ADD_ROWS:
+      PowerAddRows(other, addRowsForPowerup);
+      break;
   }
 }
+
+var PowerAddRows = function(player, numRows) {
+
+  for (var i = 0; i < numRows; i++) {
+    player.insertRow();
+  }
+
+};
 
 var PowerUpSpeedUp = function(player) {
 

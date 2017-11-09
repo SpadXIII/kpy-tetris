@@ -1,5 +1,5 @@
 // Debug
-const DEBUG = true;
+const DEBUG = false;
 
 const FIELD_COLS = 10;
 const FIELD_ROWS = 20;
@@ -53,15 +53,18 @@ const KEY_ENTER = 13;
 const SHAPE_TYPE_NORMAL = 1;
 const SHAPE_TYPE_SPEED_UP = 2;
 const SHAPE_TYPE_HOLES = 3;
+const SHAPE_TYPE_ADD_ROWS = 4;
 const SHAPE_TYPES = [
   SHAPE_TYPE_NORMAL,
   SHAPE_TYPE_SPEED_UP,
-  SHAPE_TYPE_HOLES
+  SHAPE_TYPE_HOLES,
+  SHAPE_TYPE_ADD_ROWS
 ];
 var SHAPE_IMAGES = [];
 SHAPE_IMAGES[SHAPE_TYPE_NORMAL] = 'block';
 SHAPE_IMAGES[SHAPE_TYPE_SPEED_UP] = 'block_speed_up';
 SHAPE_IMAGES[SHAPE_TYPE_HOLES] = 'block_holes';
+SHAPE_IMAGES[SHAPE_TYPE_ADD_ROWS] = 'block_add_rows';
 
 const BLOCK_TYPE_I = 0;
 const BLOCK_TYPE_J = 1;

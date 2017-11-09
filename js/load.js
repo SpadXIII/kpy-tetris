@@ -3,7 +3,8 @@ var Images = new (function() {
     // key: 'img/image_name.png'
     block: 'img/block.png',
     block_speed_up: 'img/block-speed-up.png',
-    block_holes: 'img/block-holes.png'
+    block_holes: 'img/block-holes.png',
+    block_add_rows: 'img/block-add-rows.png'
   };
 
   this.initialize = function(callback) {

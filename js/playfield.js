@@ -28,6 +28,8 @@ var Playfield = function(controlSchemeId, x, side) {
   var numCleared = 0;
   var numInsertedRows = 0;
 
+  var addRowsForPowerup = 0;
+
   var powerUps = [];
 
   initialize();
@@ -124,6 +126,7 @@ var Playfield = function(controlSchemeId, x, side) {
   }
 
   function checkFullLines() {
+    addRowsForPowerup = 0;
     var fullLines = [];
     for (var r = 0; r < grid.length; r++) {
       var isFull = true;
@@ -136,7 +139,8 @@ var Playfield = function(controlSchemeId, x, side) {
       }
     }
 
-    for (var rowNum = 0; rowNum < fullLines.length; rowNum++) {
+    addRowsForPowerup = fullLines.length;
+    for (var rowNum = 0; rowNum < addRowsForPowerup; rowNum++) {
       numCleared++;
       removeRow(fullLines[rowNum]);
     }
@@ -157,7 +161,11 @@ var Playfield = function(controlSchemeId, x, side) {
     // Check for powerUps
     for (c = 0; c < FIELD_COLS; c++) {
       if (grid[rowNum][c].block !== SHAPE_TYPE_NORMAL) {
-        createPowerup(grid[rowNum][c].block, this, other);
+        createPowerup(grid[rowNum][c].block, this, other, addRowsForPowerup);
+
+        if (grid[rowNum][c].block === SHAPE_TYPE_ADD_ROWS) {
+          addRowsForPowerup = 0;
+        }
       }
     }
 
