@@ -10,12 +10,17 @@ function menuInitialize() {
   $('#wrapper a').on('click', function (event) {
     event.preventDefault();
 
-    stopGameForMenu();
     $activeWrapperScreen.hide();
-    $activeWrapperScreen = $(this.hash).show();
 
     if ($(this).hasClass('play')) {
       gameInitialize();
+    }
+    else if ($(this).hasClass('continue')) {
+      continueGame();
+    }
+    else {
+      stopGameForMenu();
+      $activeWrapperScreen = $(this.hash).show();
     }
   });
 
@@ -40,6 +45,7 @@ function showMenu() {
 
 function stopGameForMenu() {
   if (isPlaying || isGameOver) {
+    isPaused = false;
     isPlaying = false;
     isGameOver = false;
     MainLoop.stop();
@@ -48,10 +54,23 @@ function stopGameForMenu() {
 }
 
 function showGameOver() {
+  MainLoop.stop();
   $activeWrapperScreen = $('#gameOver').show();
 
   $activeWrapperScreen.find('.player-won').text('Player ' + (player1.hasLost() ? 2 : 1));
   $activeWrapperScreen.find('.player-lost').text('player ' + (player1.hasLost() ? 1 : 2));
+}
+
+function showGamePause() {
+  isPaused = true;
+  MainLoop.stop();
+  $activeWrapperScreen = $('#gamePause').show();
+}
+
+function continueGame() {
+  isPaused = false;
+  MainLoop.start();
+  $activeWrapperScreen = $('#gamePause').hide();
 }
 
 function settingsInitialize(player) {

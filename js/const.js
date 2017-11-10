@@ -1,5 +1,5 @@
 // Debug
-const DEBUG = false;
+const DEBUG = true;
 
 const FIELD_COLS = 10;
 const FIELD_ROWS = 20;

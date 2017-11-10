@@ -79,10 +79,10 @@ ul {
     text-align: left;
 }
 
-.back {
-    float: left;
+.back,
+.continue,
+.quit {
     width: 40%;
-    margin-left: 30%;
     background: #FCBC37;
     text-align: center;
     margin-top: 40px;
@@ -94,6 +94,21 @@ ul {
     font-style: italic;
     text-transform: uppercase;
     text-decoration: none;
+}
+
+.back {
+    float: left;
+    margin-left: 30%;
+}
+
+.continue {
+    float: left;
+    margin-left: 5%;
+}
+
+.quit {
+    float: right;
+    margin-right: 5%;
 }
 
 .bg-block {

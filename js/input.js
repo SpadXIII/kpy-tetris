@@ -16,7 +16,15 @@ function setupInput() {
 
 function keyDown(event) {
   if (event.keyCode === KEY_ESC) {
-    showMenu();
+    if (isPaused) {
+      continueGame();
+    }
+    else if (isPlaying) {
+      showGamePause();
+    }
+    else {
+      showMenu();
+    }
   }
 
   // Call each play field and let them handle the key press.
