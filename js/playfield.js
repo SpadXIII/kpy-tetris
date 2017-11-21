@@ -276,7 +276,7 @@ var Playfield = function(controlSchemeId, x, side) {
 
     intervalRemaining -= delta * intervalMultiplier;
     if (intervalRemaining < 0) {
-      intervalRemaining = interval;
+      this.resetInterval();
       if (currentBlock.canGoDown(grid)) {
         currentBlock.moveDown(grid);
       }
@@ -291,6 +291,7 @@ var Playfield = function(controlSchemeId, x, side) {
 
     if (key_held['drop']) {
       currentBlock.drop(grid);
+      this.resetInterval();
       key_held['drop'] = false;
     }
     if (key_held['down']) {
@@ -317,6 +318,10 @@ var Playfield = function(controlSchemeId, x, side) {
         powerUps.splice(p, 1);
       }
     }
+  };
+
+  this.resetInterval = function() {
+    intervalRemaining = interval;
   };
 
   this.keyDown = function(event) {
