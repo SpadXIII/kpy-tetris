@@ -290,8 +290,9 @@ var Playfield = function(controlSchemeId, x, side) {
     }
 
     if (key_held['drop']) {
-      currentBlock.drop(grid);
-      this.resetInterval();
+      if (currentBlock.drop(grid)) {
+        this.resetInterval();
+      }
       key_held['drop'] = false;
     }
     if (key_held['down']) {

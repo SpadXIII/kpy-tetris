@@ -75,9 +75,13 @@ var Block = function(type, powerUp) {
   };
 
   this.drop = function(grid) {
+    var hasDropped = false;
     while (this.canGoDown(grid)) {
       y += 1;
+      hasDropped = true;
     }
+
+    return hasDropped;
   };
 
   this.rotate = function(grid) {
